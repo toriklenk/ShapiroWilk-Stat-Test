@@ -45,4 +45,4 @@ def home():
     return render_template('input_data.html', error=None)
 
 if __name__ == '__main__':
-    app.run(debug=True)pip freeze > requirements.txt
+    app.run(debug=True)
