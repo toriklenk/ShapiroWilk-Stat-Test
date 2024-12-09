@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request
 from scipy.stats import shapiro
 
@@ -14,7 +15,7 @@ def home():
         if not data.strip():
             return render_template('input_data.html', error="Please provide data points.")
         try:
-            data_points = [float(x) for x in data.split()]
+            data_points = [float(x) for x in data.splitlines()]
         except ValueError:
             return render_template('input_data.html', error="Please enter valid numbers.")
 
@@ -44,5 +45,7 @@ def home():
     # Render initial page
     return render_template('input_data.html', error=None)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+if __name__ == "__main__":
+    # Heroku assigns a port in the PORT environment variable
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))

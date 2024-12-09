@@ -5,17 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shapiro-Wilk Test</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script type="text/javascript">
-    function printPage() {
-        window.print();
-    }
-    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: FFFFFF;
+            background-color: #f4f4f9;
             color: #333;
         }
         header {
@@ -99,21 +94,19 @@
         <h1>Shapiro-Wilk Normality Test</h1>
         <form method="POST">
             <div class="form-group">
-                <label for="study_title">Sword Bio Study Run Number:</label>
-                <input type="text" id="study_title" name="study_title" placeholder="Enter study title" required>
+                <label for="study_title">Sword Bio Study Run ID:</label>
+                <input type="text" id="study_title" name="study_title" placeholder="Enter run ID" required>
             </div>
             <div class="form-group">
                 <label for="data_points">Data Points:</label>
                 <textarea id="data_points" name="data_points" rows="5" placeholder="Enter data points (one per line)"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-            <button onclick="printPage()" class="btn btn-primary">Print</button>
         </form>
-
 
         {% if stat is not none %}
         <div class="results">
-            <h2>Results</h2>
+            <h2>Results for Shapiro-Wilks Normality Test</h2>
             {% if study_title %}
                 <p><strong>Sword Bio Study Run Number:</strong> {{ study_title }}</p>
             {% endif %}
@@ -138,8 +131,31 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <!-- Print Button -->
+            <button class="btn btn-secondary mt-3" onclick="printResults()">Print Results</button>
         </div>
         {% endif %}
     </div>
+    <script>
+    function printResults() {
+        const resultsDiv = document.querySelector('.results');
+        const newWindow = window.open('', '_blank', 'width=800,height=600');
+        newWindow.document.write(`
+            <html>
+                <head>
+                    <title>Print Results</title>
+                    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+                </head>
+                <body>
+                    ${resultsDiv.innerHTML}
+                </body>
+            </html>
+        `);
+        newWindow.document.close();
+        newWindow.focus();
+        newWindow.print();
+        newWindow.close();
+    }
+    </script>
 </body>
 </html>
